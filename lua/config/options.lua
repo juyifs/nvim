@@ -6,4 +6,4 @@ local opt = vim.opt
 
 opt.relativenumber = false
 
-opt.extc = true
+opt.exrc = true
