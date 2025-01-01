@@ -4,22 +4,8 @@
 
 local map = vim.keymap.set
 
-map("n", "<C-LeftMouse>", function()
-  vim.cmd.exec('"normal! \\<LeftMouse>"')
+map({ "n", "v" }, "<C-LeftMouse>", vim.lsp.buf.definition, { desc = "go to definition" })
 
-  vim.lsp.buf.definition()
-end, { desc = "go to definition" })
+map({ "n", "v" }, "<A-LeftMouse>", vim.lsp.buf.references, { desc = "find references" })
 
-map("n", "<A-LeftMouse>", function()
-  vim.cmd.exec('"normal! \\<LeftMouse>"')
-
-  vim.lsp.buf.references()
-end, { desc = "go to references" })
-
-map("n", "<C-A-LeftMouse>", function()
-  vim.cmd.exec('"normal! \\<LeftMouse>"')
-
-  vim.lsp.buf.implementation()
-end, { desc = "go to implementation" })
-
-map("n", "<C-Esc>", "<C-o>", { desc = "go back" })
+map({ "n", "v" }, "<A-RightMouse>", vim.lsp.buf.implementation, { desc = "find implementation" })
