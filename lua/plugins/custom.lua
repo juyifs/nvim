@@ -30,4 +30,13 @@ return {
       })
     end,
   },
+  {
+    "folke/snacks.nvim",
+    ---@type snacks.Config
+    opts = {
+      bigfile = {
+        size = 30 * 1024 * 1024,
+      },
+    },
+  },
 }

@@ -9,3 +9,8 @@ map({ "n", "v" }, "<C-LeftMouse>", vim.lsp.buf.definition, { desc = "go to defin
 map({ "n", "v" }, "<A-LeftMouse>", vim.lsp.buf.references, { desc = "find references" })
 
 map({ "n", "v" }, "<A-RightMouse>", vim.lsp.buf.implementation, { desc = "find implementation" })
+
+map("", "<D-v>", '"+p') -- Paste
+map("", "<D-c>", '"+y') -- Copy
+map("", "<D-x>", '"+x') -- Cut
+map("i","<D-v>", '<Esc>"+pa')
