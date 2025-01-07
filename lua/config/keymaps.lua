@@ -10,7 +10,18 @@ map({ "n", "v" }, "<A-LeftMouse>", vim.lsp.buf.references, { desc = "find refere
 
 map({ "n", "v" }, "<A-RightMouse>", vim.lsp.buf.implementation, { desc = "find implementation" })
 
-map("", "<D-v>", '"+p') -- Paste
-map("", "<D-c>", '"+y') -- Copy
-map("", "<D-x>", '"+x') -- Cut
-map("i","<D-v>", '<Esc>"+pa')
+local uname = vim.loop.os_uname()
+
+if uname.sysname == "Darwin" then
+    --macos--
+    map("", "<D-v>", '"+p') -- Paste
+    map("", "<D-c>", '"+y') -- Copy
+    map("", "<D-x>", '"+x') -- Cut
+    map("i","<D-v>", '<Esc>"+pa')
+else
+    map("", "<C-v>", '"+p') -- Paste
+    map("", "<C-c>", '"+y') -- Copy
+    map("", "<C-x>", '"+x') -- Cut
+    map("i","<C-v>", '<Esc>"+pa')
+end
+
