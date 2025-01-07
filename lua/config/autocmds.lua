@@ -13,10 +13,11 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("", "<F7>", function()
       local root = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ";")
       if root ~= "" then
-        print("Executed make.sh in " .. root)
-        vim.fn.system("sh " .. root .. "/make.sh")
+        vim.notify("Executed make.sh in " .. root, vim.log.levels.INFO)
+        local output = vim.fn.system("sh " .. root .. "/make.sh")
+        vim.notify(output, vim.log.levels.WARN)
       else
-        print("Could not find project root")
+        vim.notify("Could not find project root", vim.log.levels.ERROR)
       end
     end, { buffer = true })
   end,
@@ -28,10 +29,11 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("", "<F8>", function()
       local root = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ";")
       if root ~= "" then
-        print("Executed clean.sh in " .. root)
-        vim.fn.system("sh " .. root .. "/clean.sh")
+        vim.notify("Executed make.sh in " .. root, vim.log.levels.INFO)
+        local output = vim.fn.system("sh " .. root .. "/clean.sh")
+        vim.notify(output, vim.log.levels.WARN)
       else
-        print("Could not find project root")
+        vim.notify("Could not find project root", vim.log.levels.ERROR)
       end
     end, { buffer = true })
   end,
