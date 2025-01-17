@@ -33,3 +33,5 @@ else
   map("", "<C-x>", '"+x') -- Cut
   map("i", "<C-v>", '<Esc>"+pa')
 end
+
+map('v', 'd', '"_d', { noremap = true, silent = true })
