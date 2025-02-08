@@ -11,7 +11,7 @@ end, { desc = "go to definition" })
 
 map({ "n", "v" }, "<A-LeftMouse>", function()
   vim.cmd.exec('"normal! \\<LeftMouse>"')
-  require('telescope.builtin').lsp_references()
+  require("telescope.builtin").lsp_references()
 end, { desc = "find references" })
 
 map({ "n", "v" }, "<A-RightMouse>", function()
@@ -27,6 +27,7 @@ if uname.sysname == "Darwin" then
   map("", "<D-c>", '"+y') -- Copy
   map("", "<D-x>", '"+x') -- Cut
   map("i", "<D-v>", '<Esc>"+pa')
+  map("", "<D-s>", "<cmd>w<cr><esc>")
 else
   map("", "<C-v>", '"+p') -- Paste
   map("", "<C-c>", '"+y') -- Copy
@@ -34,8 +35,8 @@ else
   map("i", "<C-v>", '<Esc>"+pa')
 end
 
-map('v', 'd', '"_d', { noremap = true, silent = true })
+map("v", "d", '"_d', { noremap = true, silent = true })
 
-map("", "<leader>ss", require("telescope.builtin").lsp_document_symbols, {desc = "Goto Symbol"})
+map("", "<leader>ss", require("telescope.builtin").lsp_document_symbols, { desc = "Goto Symbol" })
 
-map("", "<leader>gb", require("telescope.builtin").git_bcommits_range, {desc = "Git Line Log"})
+map("", "<leader>gb", require("telescope.builtin").git_bcommits_range, { desc = "Git Line Log" })
