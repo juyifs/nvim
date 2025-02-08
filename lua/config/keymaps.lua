@@ -35,3 +35,7 @@ else
 end
 
 map('v', 'd', '"_d', { noremap = true, silent = true })
+
+map("", "<leader>ss", require("telescope.builtin").lsp_document_symbols, {desc = "Goto Symbol"})
+
+map("", "<leader>gb", require("telescope.builtin").git_bcommits_range, {desc = "Git Line Log"})

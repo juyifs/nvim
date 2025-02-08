@@ -44,4 +44,32 @@ return {
     lazy = true,
     opts = { style = "day" },
   },
+  {
+    "folke/trouble.nvim",
+    opts = {
+      modes = {
+        lsp = {
+          win = { position = "bottom" },
+        },
+      },
+    },
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = {
+      defaults = {
+        theme = "dropdown",
+        layout_strategy = "vertical",
+        layout_config = {
+          width = 0.9,
+          height = 0.9,
+          preview_cutoff = 15,
+        },
+      },
+    },
+  },
+  {
+    "Mr-LLLLL/interestingwords.nvim",
+    opts = {},
+  },
 }
