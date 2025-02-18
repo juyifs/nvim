@@ -72,4 +72,21 @@ return {
     "Mr-LLLLL/interestingwords.nvim",
     opts = {},
   },
+  {
+    "akinsho/bufferline.nvim",
+    opts = {
+      options = {
+        -- 关闭名称截断
+        truncate_names = false,
+        -- 设置最大文件名长度（设为足够大的值）
+        max_name_length = 100,
+      },
+    },
+  },
+  {
+    "stevearc/aerial.nvim",
+    opts = {
+      sort = "name", -- 按名称（字母顺序）排列
+    },
+  },
 }
