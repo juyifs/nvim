@@ -11,10 +11,11 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "cpp", "c", "h", "hpp" },
   callback = function()
     vim.keymap.set("", "<F7>", function()
-      local root = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ";")
-      if root ~= "" then
+      local build_sh_dir = vim.fn.findfile("build.sh", vim.fn.expand("%:p:h") .. ";")
+      if build_sh_dir ~= "" then
+        local root = vim.fn.fnamemodify(build_sh_dir, ":h")
         vim.notify("Executed make.sh in " .. root, vim.log.levels.INFO)
-        local output = vim.fn.system("sh " .. root .. "/make.sh")
+        local output = vim.cmd("enew | term bash " .. root .. "/build.sh")
         vim.notify(output, vim.log.levels.WARN)
       else
         vim.notify("Could not find project root", vim.log.levels.ERROR)
@@ -27,10 +28,11 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "cpp", "c", "h", "hpp" },
   callback = function()
     vim.keymap.set("", "<F8>", function()
-      local root = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ";")
-      if root ~= "" then
+      local build_sh_dir = vim.fn.findfile("build.sh", vim.fn.expand("%:p:h") .. ";")
+      if build_sh_dir ~= "" then
+        local root = vim.fn.fnamemodify(build_sh_dir, ":h")
         vim.notify("Executed make.sh in " .. root, vim.log.levels.INFO)
-        local output = vim.fn.system("sh " .. root .. "/clean.sh")
+        local output = vim.cmd("enew | term bash " .. root .. "/build.sh c")
         vim.notify(output, vim.log.levels.WARN)
       else
         vim.notify("Could not find project root", vim.log.levels.ERROR)
@@ -38,3 +40,4 @@ vim.api.nvim_create_autocmd("FileType", {
     end, { buffer = true })
   end,
 })
+
