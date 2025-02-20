@@ -14,9 +14,9 @@ if vim.g.neovide then
 end
 
 -- 设置 tab 键占用 4 个字符空间
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.softtabstop=4
+-- vim.opt.tabstop = 4
+-- vim.opt.shiftwidth = 4
+-- vim.opt.expandtab = true
+-- vim.opt.softtabstop=4
 
 vim.opt.wrap = true
