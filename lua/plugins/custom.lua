@@ -66,6 +66,22 @@ return {
           preview_cutoff = 15,
         },
       },
+      pickers = {
+        lsp_references = {
+          include_declaration = true,
+          include_current_line = true,
+        },
+        lsp_document_symbols = {
+          fname_width = 50,
+          symbol_width = 50,
+          symbol_type_width = 30,
+        },
+        lsp_dynamic_workspace_symbols = {
+          fname_width = 50,
+          symbol_width = 50,
+          symbol_type_width = 30,
+        },
+      },
     },
   },
   {
