@@ -59,6 +59,7 @@ return {
     opts = {
       defaults = {
         theme = "dropdown",
+        path_display = { "smart" },
         layout_strategy = "vertical",
         layout_config = {
           width = 0.9,
@@ -97,12 +98,6 @@ return {
         -- 设置最大文件名长度（设为足够大的值）
         max_name_length = 100,
       },
-    },
-  },
-  {
-    "stevearc/aerial.nvim",
-    opts = {
-      sort = "name", -- 按名称（字母顺序）排列
     },
   },
 }
