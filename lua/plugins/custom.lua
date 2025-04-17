@@ -40,11 +40,6 @@ return {
     },
   },
   {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    opts = { style = "day" },
-  },
-  {
     "folke/trouble.nvim",
     opts = {
       modes = {
@@ -59,7 +54,6 @@ return {
     opts = {
       defaults = {
         theme = "dropdown",
-        path_display = { "smart" },
         layout_strategy = "vertical",
         layout_config = {
           width = 0.9,
@@ -96,7 +90,8 @@ return {
         -- 关闭名称截断
         truncate_names = false,
         -- 设置最大文件名长度（设为足够大的值）
-        max_name_length = 100,
+        max_name_length = 50,
+        always_show_bufferline = true,
       },
     },
   },
@@ -116,5 +111,11 @@ return {
         render_on_write = true,
       })
     end,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "lunaperche",
+    },
   },
 }
