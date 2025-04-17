@@ -19,7 +19,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.softtabstop=4
 
-vim.opt.wrap = 
+vim.opt.wrap = true
 
 -- 自动搜索当前及父级目录的 tags 文件
 vim.opt.tags = "./tags;,tags;"
