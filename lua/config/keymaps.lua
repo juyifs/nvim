@@ -72,3 +72,11 @@ if vim.fn.executable("lazygit") == 1 then
   map("n", "<leader>gl", function() Snacks.picker.git_log( { cwd = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ";") }) end, { desc = "Git Log" })
   map("n", "<leader>gL", function() Snacks.picker.git_log({ cwd = vim.fn.expand("%:p:h") }) end, { desc = "Git Log (cwd)" })
 end
+
+map("n", "<leader>tg", ":Telescope tags<CR>", { silent = true, desc = "Search tags" })
+map("n", "<leader>tr", function()
+    vim.schedule(function()
+      -- 异步生成当前目录 tags
+        vim.fn.system("ctags -R --extras=+q .")
+    end)
+  end, { silent = true, desc = "Rebuild tags" })
