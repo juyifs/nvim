@@ -51,33 +51,45 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    opts = {
-      defaults = {
-        theme = "dropdown",
-        layout_strategy = "vertical",
-        layout_config = {
-          width = 0.9,
-          height = 0.9,
-          preview_cutoff = 15,
-        },
-      },
-      pickers = {
-        lsp_references = {
-          include_declaration = true,
-          include_current_line = true,
-        },
-        lsp_document_symbols = {
-          fname_width = 50,
-          symbol_width = 50,
-          symbol_type_width = 30,
-        },
-        lsp_dynamic_workspace_symbols = {
-          fname_width = 50,
-          symbol_width = 50,
-          symbol_type_width = 30,
-        },
+    dependencies = {
+      {
+        "nvim-telescope/telescope-live-grep-args.nvim",
+        -- This will not install any breaking changes.
+        -- For major updates, this must be adjusted manually.
+        version = "^1.0.0",
       },
     },
+    opts = function()
+      local telescope = require("telescope")
+      telescope.load_extension("live_grep_args")
+      return {
+        defaults = {
+          theme = "dropdown",
+          layout_strategy = "vertical",
+          layout_config = {
+            width = 0.9,
+            height = 0.9,
+            preview_cutoff = 15,
+          },
+        },
+        pickers = {
+          lsp_references = {
+            include_declaration = true,
+            include_current_line = true,
+          },
+          lsp_document_symbols = {
+            fname_width = 50,
+            symbol_width = 50,
+            symbol_type_width = 30,
+          },
+          lsp_dynamic_workspace_symbols = {
+            fname_width = 50,
+            symbol_width = 50,
+            symbol_type_width = 30,
+          },
+        },
+      }
+    end,
   },
   {
     "Mr-LLLLL/interestingwords.nvim",
@@ -112,10 +124,10 @@ return {
       })
     end,
   },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "lunaperche",
-    },
-  },
+--  {
+--    "LazyVim/LazyVim",
+--    opts = {
+--      colorscheme = "lunaperche",
+--    },
+--  },
 }
