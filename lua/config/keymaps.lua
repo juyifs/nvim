@@ -80,3 +80,7 @@ map("n", "<leader>tr", function()
         vim.fn.system("ctags -R --extras=+q .")
     end)
   end, { silent = true, desc = "Rebuild tags" })
+
+map("n", "<leader>sg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", {desc = "Grep (root dir)"})
+map("n", "<leader>sw", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>", {desc = "Word (root dir)"})
+map("n", "<leader>sf", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor_current_buffer()<CR>", {desc = "Word (current file)"})
