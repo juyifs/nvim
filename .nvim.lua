@@ -27,12 +27,13 @@ ctx:lsp_setup({
 				search_dirs = { "/AA/BB", "/AA/CC", ".nvim.lua" },
 			},
 		},
-    extensions = {
-      live_grep_args = {
-        search_dirs = {
-          "/AA/BB","/AA/CC"
-        },
-      }
-    },
-	}),
+		    extensions = {
+		      live_grep_args = {
+		        search_dirs = {
+		          "/AA/BB","/AA/CC"
+		        },
+		      }
+		    },
+		}),
 })
+require("telescope").load_extension("live_grep_args")
