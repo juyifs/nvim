@@ -65,6 +65,7 @@ return {
       return {
         defaults = {
           theme = "dropdown",
+          path_display = { "smart" },
           layout_strategy = "vertical",
           layout_config = {
             width = 0.9,
@@ -124,10 +125,20 @@ return {
       })
     end,
   },
---  {
---    "LazyVim/LazyVim",
---    opts = {
---      colorscheme = "lunaperche",
---    },
---  },
+  {
+    "nickkadutskyi/jb.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function()
+      -- require("jb").setup({transparent = true})
+      vim.cmd("colorscheme jb")
+    end,
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "jb",
+    },
+  },
 }
