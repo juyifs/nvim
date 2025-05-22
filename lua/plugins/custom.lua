@@ -65,7 +65,7 @@ return {
       return {
         defaults = {
           theme = "dropdown",
-          path_display = { "smart" },
+          path_display = { "filename_first" },
           layout_strategy = "vertical",
           layout_config = {
             width = 0.9,
