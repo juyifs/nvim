@@ -85,3 +85,8 @@ map("n", "<leader>tr", function()
 map("n", "<leader>sg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", {desc = "Grep (root dir)"})
 map("n", "<leader>sw", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>", {desc = "Word (root dir)"})
 map("n", "<leader>sf", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor_current_buffer()<CR>", {desc = "Word (current file)"})
+
+map("n", "<leader>cp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+  print("Copied path: " .. vim.fn.expand("%:p"))
+end, { noremap = true, silent = true, desc = "Copy File Path" })
