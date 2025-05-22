@@ -71,6 +71,7 @@ if vim.fn.executable("lazygit") == 1 then
   map("n", "<leader>gf", function() Snacks.picker.git_log_file() end, { desc = "Git Current File History" })
   map("n", "<leader>gl", function() Snacks.picker.git_log( { cwd = vim.fn.finddir(".git/..", vim.fn.expand("%:p:h") .. ";") }) end, { desc = "Git Log" })
   map("n", "<leader>gL", function() Snacks.picker.git_log({ cwd = vim.fn.expand("%:p:h") }) end, { desc = "Git Log (cwd)" })
+  map("n", "<leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Log Line" })
 end
 
 map("n", "<leader>tg", ":Telescope tags<CR>", { silent = true, desc = "Search tags" })
