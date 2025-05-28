@@ -25,3 +25,5 @@ vim.opt.wrap = true
 vim.opt.tags = "./tags;,tags;"
 
 vim.o.background = 'light'
+
+vim.g.root_spec = { { ".git", ".nvim.lua", "lua" }, "lsp", "cwd" }
