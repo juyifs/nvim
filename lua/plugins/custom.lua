@@ -141,4 +141,9 @@ return {
       colorscheme = "jb",
     },
   },
+  {
+    "ZSaberLv0/ZFVimDirDiff",
+    dependencies = { "ZSaberLv0/ZFVimJob" },
+    cmd = "ZFDirDiff", -- 按需加载
+  },
 }
