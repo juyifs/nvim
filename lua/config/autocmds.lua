@@ -47,7 +47,7 @@ vim.api.nvim_set_keymap('n', '<F1>', '', {
         -- 获取相对路径，并将路径中的AAA换成BBB
         local relative_path = vim.fn.expand('%:p:~:.')
         relative_path = string.gsub(relative_path, "AAA", "BBB")
-BBB
+
         -- 拼接比较文件的路径
         local target_path = '/home/test/'..relative_path
 
