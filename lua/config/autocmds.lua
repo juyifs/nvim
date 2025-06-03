@@ -41,20 +41,23 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_set_keymap('n', '<F1>', '', {
-    noremap = true,
-    callback = function()
-        -- 获取相对路径，并将路径中的AAA换成BBB
-        local relative_path = vim.fn.expand('%:p:~:.')
-        relative_path = string.gsub(relative_path, "AAA", "BBB")
+vim.api.nvim_set_keymap("n", "<F1>", "", {
+  noremap = true,
+  callback = function()
+    -- 获取相对路径，并将路径中的AAA换成BBB
+    local relative_path = vim.api.nvim_buf_get_name(0)
+    local prefix = "/home/test1"
+    relative_path = string.gsub(relative_path, "^" .. prefix, "")
+    relative_path = string.gsub(relative_path, "AAA", "BBB")
 
-        -- 拼接比较文件的路径
-        local target_path = '/home/test/'..relative_path
+    -- 拼接比较文件的路径
+    local target_path = "/home/test2" .. relative_path
 
-        -- 执行垂直分割差异比较
-        vim.cmd('vert diffsplit '..target_path)
+    vim.cmd("LspStop")
+    -- 执行垂直分割差异比较
+    vim.cmd("vert diffsplit " .. target_path)
 
-        --展开折叠
-        vim.cmd("norm zR")
-    end
+    --展开折叠
+    vim.cmd("norm zR")
+  end,
 })
