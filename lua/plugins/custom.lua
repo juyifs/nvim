@@ -146,4 +146,11 @@ return {
     dependencies = { "ZSaberLv0/ZFVimJob" },
     cmd = "ZFDirDiff", -- 按需加载
   },
+  {
+    "tiagovla/scope.nvim",
+    config = true,
+    opts = function()
+      require("telescope").load_extension("scope")
+    end,
+  },
 }
