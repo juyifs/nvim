@@ -107,3 +107,9 @@ end, {desc = "create new tab" })
 map("n", "<leader>td", function ()
     vim.cmd("tabclose")
 end, {desc = "close tab" })
+
+-- read-only mde 
+map('n', '<leader>ro', ':set readonly<CR>:set nomodified<CR>', {desc = "Read-only mode"})
+map('n', '<leader>rw', ':set noreadonly<CR>', {desc = "Exit read-only"})
+
+map('n', '<C-q>', '<C-o>', { noremap = true, silent = true })
