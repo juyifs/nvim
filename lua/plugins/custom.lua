@@ -153,4 +153,8 @@ return {
       require("telescope").load_extension("scope")
     end,
   },
+  {
+    "aklt/plantuml-syntax",
+    -- ft = { "plantuml", "puml", "pu" },
+  },
 }
