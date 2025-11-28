@@ -126,19 +126,9 @@ return {
     end,
   },
   {
-    "nickkadutskyi/jb.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-    config = function()
-      -- require("jb").setup({transparent = true})
-      vim.cmd("colorscheme jb")
-    end,
-  },
-  {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "jb",
+      colorscheme = "starry",
     },
   },
   {
@@ -156,5 +146,15 @@ return {
   {
     "aklt/plantuml-syntax",
     -- ft = { "plantuml", "puml", "pu" },
+  },
+  {
+    "ray-x/starry.nvim",
+    lazy = false, -- 立即加载
+    priority = 1000, -- 确保在其他插件之前加载
+    config = {
+      style = {
+        name = "dracula",
+      },
+    },
   },
 }
