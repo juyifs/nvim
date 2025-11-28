@@ -4,6 +4,7 @@
   "ZFVimDirDiff": { "branch": "master", "commit": "37847db40c56a7c7d306344fb211f125755aafea" },
   "ZFVimJob": { "branch": "master", "commit": "df799bbe48809655dfb391e20c9ed2a520e3ebf6" },
   "aerial.nvim": { "branch": "master", "commit": "8bb8697d180681746da41bef5c8691d04443af36" },
+  "blink-copilot": { "branch": "main", "commit": "7ad8209b2f880a2840c94cdcd80ab4dc511d4f39" },
   "blink.cmp": { "branch": "main", "commit": "b19413d214068f316c78978b08264ed1c41830ec" },
   "bufferline.nvim": { "branch": "main", "commit": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3" },
   "catppuccin": { "branch": "main", "commit": "ce4a8e0d5267e67056f9f4dcf6cb1d0933c8ca00" },
