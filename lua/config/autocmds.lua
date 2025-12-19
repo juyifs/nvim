@@ -61,3 +61,22 @@ vim.api.nvim_set_keymap("n", "<F1>", "", {
     vim.cmd("norm zR")
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "TelescopePrompt",
+  callback = function(args)
+    local actions = require("telescope.actions")
+    -- 当前 Telescope 的 prompt 缓冲区号
+    local prompt_bufnr = args.buf
+
+    -- 定义一个复合动作：导出到 Quickfix，并打开 Quickfix 窗口
+    local function send_and_open()
+      actions.smart_send_to_qflist(prompt_bufnr)
+      actions.open_qflist(prompt_bufnr)
+    end
+
+    -- 在插入态和普通态都绑定 <C-q>
+    vim.keymap.set("i", "<C-q>", send_and_open, { buffer = prompt_bufnr, desc = "导出到 Quickfix 并打开" })
+    vim.keymap.set("n", "<C-q>", send_and_open, { buffer = prompt_bufnr, desc = "导出到 Quickfix 并打开" })
+   end,
+})
