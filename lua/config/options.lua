@@ -29,3 +29,15 @@ vim.o.background = 'light'
 vim.g.root_spec = { { ".git", ".nvim.lua", "lua" }, "lsp", "cwd" }
 
 vim.g.ZFDirDiff_excludeFilter = { "*.o", "*.d", "*.a", "*.so" }
+
+vim.g.clipboard = {
+  name = 'OSC 52',
+  copy = {
+    ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+  },
+  paste = {
+    ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+    ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+  },
+}
