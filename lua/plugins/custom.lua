@@ -65,6 +65,7 @@ return {
       return {
         defaults = {
           theme = "dropdown",
+          scroll_strategy = "limit",
           path_display = { "filename_first" },
           layout_strategy = "vertical",
           layout_config = {
