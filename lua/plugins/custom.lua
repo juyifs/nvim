@@ -185,6 +185,9 @@ return {
       style = {
         name = "dracula",
       },
+      custom_highlights = {
+        CursorLine = { bg = '#c0c0c0' , underline = true },
+      },
     },
   },
 }
