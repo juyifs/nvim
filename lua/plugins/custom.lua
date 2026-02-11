@@ -187,6 +187,11 @@ return {
       },
       custom_highlights = {
         CursorLine = { bg = '#c0c0c0' , underline = true },
+        Visual = { 
+            bg = '#c0c0c0', -- 设置你想要的选中背景颜色（十六进制）
+            fg = 'NONE',    -- 设置选中文本的前景颜色（NONE 表示保持原样）
+            bold = true     -- 可选：是否加粗
+        },
       },
     },
   },
