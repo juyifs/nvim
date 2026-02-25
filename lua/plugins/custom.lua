@@ -95,36 +95,36 @@ return {
   },
   {
     "Mr-LLLLL/interestingwords.nvim",
-      opts = {
-        colors = { 
-            '#aeee00', 
-            '#ff0000', 
-            '#0000ff', 
-            '#b88823', 
-            '#ffa724', 
-            '#ff2c4b', 
-            '#FF5733',
-            '#33FF57',
-            '#3357FF',
-            '#FF33A8',
-            '#FFD133',
-            '#33FFF5',
-            '#A833FF',
-            '#FF8C33',
-            '#33FF8C',
-            '#8C33FF',
-            '#FF3333',
-            '#33FF33',
-            '#3333FF',
-            '#FFB733',
-            '#33B7FF',
-            '#B733FF',
-            '#FF33D1',
-            '#33FFD1',
-            '#D1FF33',
-            '#FF6633',
-          },
+    opts = {
+      colors = {
+        "#aeee00",
+        "#ff0000",
+        "#0000ff",
+        "#b88823",
+        "#ffa724",
+        "#ff2c4b",
+        "#FF5733",
+        "#33FF57",
+        "#3357FF",
+        "#FF33A8",
+        "#FFD133",
+        "#33FFF5",
+        "#A833FF",
+        "#FF8C33",
+        "#33FF8C",
+        "#8C33FF",
+        "#FF3333",
+        "#33FF33",
+        "#3333FF",
+        "#FFB733",
+        "#33B7FF",
+        "#B733FF",
+        "#FF33D1",
+        "#33FFD1",
+        "#D1FF33",
+        "#FF6633",
       },
+    },
   },
   {
     "akinsho/bufferline.nvim",
@@ -158,7 +158,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "starry",
+      colorscheme = "everforest",
     },
   },
   {
@@ -178,22 +178,16 @@ return {
     -- ft = { "plantuml", "puml", "pu" },
   },
   {
-    "ray-x/starry.nvim",
-    lazy = false, -- 立即加载
-    priority = 1000, -- 确保在其他插件之前加载
-    config = {
-      style = {
-        name = "dracula",
-      },
-      custom_highlights = {
-        CursorLine = { bg = '#c0c0c0' , underline = true },
-        Visual = { 
-            bg = '#c0c0c0', -- 设置你想要的选中背景颜色（十六进制）
-            fg = 'NONE',    -- 设置选中文本的前景颜色（NONE 表示保持原样）
-            bold = true     -- 可选：是否加粗
-        },
-      },
-    },
+    "neanias/everforest-nvim",
+    version = false,
+    lazy = false,
+    priority = 1000, -- make sure to load this before all the other start plugins
+    -- Optional; default configuration will be used if setup isn't called.
+    config = function()
+      require("everforest").setup({
+        background = "medium",
+      })
+    end,
   },
   {
     "jmacadie/telescope-hierarchy.nvim",
