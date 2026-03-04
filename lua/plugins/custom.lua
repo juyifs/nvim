@@ -124,6 +124,7 @@ return {
         "#D1FF33",
         "#FF6633",
       },
+      cancel_color_key = "<leader>a",
     },
   },
   {
