@@ -58,5 +58,5 @@
   "venv-selector.nvim": { "branch": "main", "commit": "59adce1481e2a182bc1e4d706869b069f19b32ba" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" },
   "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
-  "gitlineage.nvim": { "branch": "main", "commit": "da795833925aae2e4d0cf75d2529d258bf4fb82c" },
+  "gitlineage.nvim": { "branch": "main", "commit": "da795833925aae2e4d0cf75d2529d258bf4fb82c" }
 }
