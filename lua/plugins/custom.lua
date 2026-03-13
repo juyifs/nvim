@@ -52,16 +52,137 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      {
-        "nvim-telescope/telescope-live-grep-args.nvim",
-        -- This will not install any breaking changes.
-        -- For major updates, this must be adjusted manually.
-        version = "^1.0.0",
-      },
+      { "nvim-telescope/telescope-live-grep-args.nvim", version = "^1.0.0" },
     },
     opts = function()
       local telescope = require("telescope")
-      telescope.load_extension("live_grep_args")
+      local entry_display = require("telescope.pickers.entry_display")
+
+      -- 辅助函数：获取 Treesitter 层级上下文
+      local function get_line_context(bufnr, lnum)
+        local ok, parser = pcall(vim.treesitter.get_parser, bufnr)
+        if not ok or not parser then
+          return ""
+        end
+
+        local tree = parser:parse()[1]
+        if not tree then
+          return ""
+        end
+
+        -- TS 行号 0-indexed
+        local node = tree:root():named_descendant_for_range(lnum - 1, 0, lnum - 1, -1)
+        local breadcrumbs = {}
+
+        -- 【改进点】：定义一个内部函数，深度优先搜索第一个 identifier 节点
+        local function find_name_node(n)
+          if not n then
+            return nil
+          end
+          -- 优先检查 TS 规定的 name 或 declarator 字段
+          local target = n:field("name")[1] or n:field("declarator")[1]
+          if target then
+            -- 如果找到的是 identifier，直接返回；否则继续深挖
+            if target:type():find("identifier") then
+              return target
+            end
+            return find_name_node(target)
+          end
+          -- 兜底：如果没有字段名，递归找第一个名为 identifier 的子节点
+          for i = 0, n:child_count() - 1 do
+            local child = n:child(i)
+            if child:type():find("identifier") then
+              return child
+            end
+            -- 限制递归深度，避免过度消耗性能
+            local deep = find_name_node(child)
+            if deep then
+              return deep
+            end
+          end
+          return nil
+        end
+
+        local current = node
+        while current do
+          local type = current:type()
+          if type:find("function") or type:find("class") or type:find("method") or type:find("struct") then
+            local name_node = find_name_node(current)
+            if name_node then
+              local text = vim.treesitter.get_node_text(name_node, bufnr)
+              if text and #text < 50 then
+                table.insert(breadcrumbs, 1, text)
+              end
+            end
+          end
+          current = current:parent()
+        end
+
+        return #breadcrumbs > 0 and (" 󰆧 " .. table.concat(breadcrumbs, " > ")) or ""
+      end
+
+      -- 自定义 Entry Maker：保留原始功能并注入 Context
+      local function custom_make_entry(entry)
+        local make_displayer = require("telescope.pickers.entry_display")
+        local make_entry = require("telescope.make_entry")
+
+        -- 1. 处理原始数据提取 (兼容 LSP Table 和 Grep String)
+        local filename, lnum, col, text
+        if type(entry) == "string" then
+          -- 如果是字符串 (live_grep)，使用内置解析器
+          local vimgrep_entry = make_entry.gen_from_vimgrep({ path_display = { "filename_first" } })(entry)
+          if not vimgrep_entry then
+            return nil
+          end
+          filename, lnum, col, text = vimgrep_entry.filename, vimgrep_entry.lnum, vimgrep_entry.col, vimgrep_entry.text
+        else
+          -- 如果是 Table (lsp_references)，直接读取
+          filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr or 0)
+          lnum = entry.lnum or 1
+          col = entry.col or 1
+          text = entry.text or ""
+        end
+
+        -- 2. 定义显示布局 (使用 nil 实现紧凑间距)
+        local displayer = make_displayer.create({
+          separator = " ",
+          items = {
+            { width = nil }, -- 文件名 (自适应)
+            { width = nil }, -- 层级 (自适应)
+            { width = nil }, -- 行列号 (自适应)
+            { remaining = true }, -- 内容
+          },
+        })
+
+        -- 3. 返回构造后的 Entry 对象
+        return {
+          value = entry,
+          -- ordinal 用于搜索过滤，必须是字符串
+          ordinal = string.format("%s %s", filename, text),
+          display = function(et)
+            -- 实时获取 Treesitter 上下文
+            local bufnr = vim.fn.bufnr(filename)
+            if bufnr == -1 then
+              bufnr = vim.fn.bufadd(filename)
+              vim.fn.bufload(bufnr)
+            end
+            local context = get_line_context(bufnr, lnum)
+
+            local display_filename = vim.fn.fnamemodify(filename, ":t")
+
+            return displayer({
+              { display_filename, "TelescopeResultsFileName" },
+              { context, "TelescopeResultsVariable" },
+              { string.format("%d:%d", lnum, col), "TelescopeResultsLineNr" },
+              { text:gsub("^%s*", ""), "" }, -- 去除内容开头的空格，让布局更紧凑
+            })
+          end,
+          filename = filename,
+          lnum = lnum,
+          col = col,
+        }
+      end
+
       return {
         defaults = {
           theme = "dropdown",
@@ -73,11 +194,27 @@ return {
             height = 0.9,
             preview_cutoff = 15,
           },
+          -- 在全局默认配置中启用自定义渲染（如果你希望 live_grep 等也生效）
+          -- entry_maker = custom_make_entry,
         },
+
+        extensions = {
+          live_grep_args = {
+            auto_quoting = true, -- 保持插件默认功能
+            -- 核心：为扩展指定自定义的 entry_maker
+            entry_maker = custom_make_entry,
+            -- 你原本可能有的 mappings 配置...
+          },
+        },
+
         pickers = {
+          -- 针对特定搜索开启层级显示
+          live_grep = { entry_maker = custom_make_entry },
+          grep_string = { entry_maker = custom_make_entry },
           lsp_references = {
             include_declaration = true,
             include_current_line = true,
+            entry_maker = custom_make_entry, -- 引用列表里显示层级非常有用
           },
           lsp_document_symbols = {
             fname_width = 50,
