@@ -60,6 +60,10 @@ return {
 
       -- 辅助函数：获取 Treesitter 层级上下文
       local function get_line_context(bufnr, lnum)
+        if not vim.api.nvim_buf_is_loaded(bufnr) then
+          vim.fn.bufload(bufnr)
+        end
+
         local ok, parser = pcall(vim.treesitter.get_parser, bufnr)
         if not ok or not parser then
           return ""
@@ -103,15 +107,53 @@ return {
           return nil
         end
 
+        -- 定义我们关心的“硬结构”类型关键字
+        local structural_types = {
+          "function",
+          "method",
+          "class",
+          "struct",
+          "interface",
+          "impl",
+          "module",
+          "trait",
+          "enum",
+        }
+
+        local function is_structural(node_type)
+          node_type = node_type:lower()
+          for _, t in ipairs(structural_types) do
+            if node_type:find(t) then
+              return true
+            end
+          end
+          return false
+        end
+
         local current = node
-        while current do
+        local count = 0
+        local pre_type = current:type()
+        while current and count < 2 do
           local type = current:type()
-          if type:find("function") or type:find("class") or type:find("method") or type:find("struct") then
+          if is_structural(type) then
             local name_node = find_name_node(current)
             if name_node then
               local text = vim.treesitter.get_node_text(name_node, bufnr)
               if text and #text < 50 then
-                table.insert(breadcrumbs, 1, text)
+                -- 【新增：精简逻辑】
+                -- 使用正则匹配最后一个 :: 之后的内容，如果没有 :: 则保留原样
+                local clean_text = text:match("([^:]+)$") or text
+                if count == 0 then
+                  pre_type = type
+                  table.insert(breadcrumbs, 1, clean_text)
+                  count = count + 1
+                else
+                  if pre_type == type then
+                  else
+                    table.insert(breadcrumbs, 1, clean_text)
+                    count = count + 1
+                  end
+                end
               end
             end
           end
@@ -211,7 +253,7 @@ return {
           -- 针对特定搜索开启层级显示
           live_grep = { entry_maker = custom_make_entry },
           grep_string = { entry_maker = custom_make_entry },
-          lsp_incoming_calls = { entry_maker = custom_make_entry },  
+          lsp_incoming_calls = { entry_maker = custom_make_entry },
           lsp_references = {
             include_declaration = true,
             include_current_line = true,
