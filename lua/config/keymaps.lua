@@ -113,3 +113,5 @@ map('n', '<leader>ro', ':set readonly<CR>:set nomodified<CR>', {desc = "Read-onl
 map('n', '<leader>rw', ':set noreadonly<CR>', {desc = "Exit read-only"})
 
 map('n', '<C-q>', '<C-o>', { noremap = true, silent = true })
+
+map('n', 'gi', ':Telescope lsp_incoming_calls<CR>', {desc = "Goto incoming call"})
