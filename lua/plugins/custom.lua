@@ -211,6 +211,7 @@ return {
           -- 针对特定搜索开启层级显示
           live_grep = { entry_maker = custom_make_entry },
           grep_string = { entry_maker = custom_make_entry },
+          lsp_incoming_calls = { entry_maker = custom_make_entry },  
           lsp_references = {
             include_declaration = true,
             include_current_line = true,
