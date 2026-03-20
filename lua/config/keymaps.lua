@@ -74,7 +74,7 @@ if vim.fn.executable("lazygit") == 1 then
   map("n", "<leader>gb", function() Snacks.picker.git_log_line() end, { desc = "Git Log Line" })
 end
 
-map("n", "<leader>tg", ":Telescope tags<CR>", { silent = true, desc = "Search tags" })
+map("n", "<leader>tg", ":Telescope tags<CR>", { silent = true, desc = "Search tags" , silent = true})
 map("n", "<leader>tr", function()
     vim.schedule(function()
       -- 异步生成当前目录 tags
@@ -82,9 +82,9 @@ map("n", "<leader>tr", function()
     end)
   end, { silent = true, desc = "Rebuild tags" })
 
-map("n", "<leader>sg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", {desc = "Grep (root dir)"})
-map("n", "<leader>sw", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>", {desc = "Word (root dir)"})
-map("n", "<leader>sf", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor_current_buffer()<CR>", {desc = "Word (current file)"})
+map("n", "<leader>sg", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", {desc = "Grep (root dir)", silent = true})
+map("n", "<leader>sw", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor()<CR>", {desc = "Word (root dir)", silent = true})
+map("n", "<leader>sf", ":lua require('telescope-live-grep-args.shortcuts').grep_word_under_cursor_current_buffer()<CR>", {desc = "Word (current file)", silent = true})
 
 map("n", "<leader>cp", function()
   vim.fn.setreg("+", vim.fn.expand("%:p"))
@@ -109,13 +109,16 @@ map("n", "<leader>td", function ()
 end, {desc = "close tab" })
 
 -- read-only mde 
-map('n', '<leader>ro', ':set readonly<CR>:set nomodified<CR>', {desc = "Read-only mode"})
-map('n', '<leader>rw', ':set noreadonly<CR>', {desc = "Exit read-only"})
+map('n', '<leader>ro', ':set readonly<CR>:set nomodified<CR>', {desc = "Read-only mode", silent = true})
+map('n', '<leader>rw', ':set noreadonly<CR>', {desc = "Exit read-only", silent = true})
 
 map('n', '<C-q>', '<C-o>', { noremap = true, silent = true })
 
-map('n', 'gi', ':Telescope lsp_incoming_calls<CR>', {desc = "Goto incoming call"})
+map('n', 'gi', ':Telescope lsp_incoming_calls<CR>', {desc = "Goto incoming call", silent = true})
 
-map('', "<leader>mm", ":BookmarksMark<CR>", { desc = "Mark current line" })
-map('', "<leader>mo", ":BookmarksGoto<CR>", { desc = "Go to BookmarkList" })
-map('', "<leader>mt", ":BookmarksTree<CR>", { desc = "Go to BookmarksTree" })
+map('', "<leader>mm", ":BookmarksMark<CR>", { desc = "Mark current line", silent = true })
+map('', "<leader>mo", ":BookmarksGoto<CR>", { desc = "Go to BookmarkList", silent = true })
+map('', "<leader>mt", ":BookmarksTree<CR>", { desc = "Go to BookmarksTree", silent = true })
+
+-- 模式：n (普通模式) 翻译光标下的词；v (可视模式) 翻译选中的文本
+map({'n', 'v'}, '<leader>tw', '<cmd>Translate zh-CN<CR>', { silent = true })
