@@ -115,3 +115,7 @@ map('n', '<leader>rw', ':set noreadonly<CR>', {desc = "Exit read-only"})
 map('n', '<C-q>', '<C-o>', { noremap = true, silent = true })
 
 map('n', 'gi', ':Telescope lsp_incoming_calls<CR>', {desc = "Goto incoming call"})
+
+map('', "<leader>mm", ":BookmarksMark<CR>", { desc = "Mark current line" })
+map('', "<leader>mo", ":BookmarksGoto<CR>", { desc = "Go to BookmarkList" })
+map('', "<leader>mt", ":BookmarksTree<CR>", { desc = "Go to BookmarksTree" })
