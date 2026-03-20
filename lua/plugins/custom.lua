@@ -118,6 +118,13 @@ return {
           "module",
           "trait",
           "enum",
+          "array", -- 通用数组
+          "slice", -- Go/Rust 切片
+          "list", -- Python/Erlang 列表
+          "table", -- Lua 表
+          "vector", -- C++ 向量
+          "dictionary", -- 字典/映射
+          "object", -- JSON/JS 对象  
         }
 
         local function is_structural(node_type)
@@ -254,6 +261,7 @@ return {
           live_grep = { entry_maker = custom_make_entry },
           grep_string = { entry_maker = custom_make_entry },
           lsp_incoming_calls = { entry_maker = custom_make_entry },
+          lsp_implementations = { entry_maker = custom_make_entry },  
           lsp_references = {
             include_declaration = true,
             include_current_line = true,
@@ -304,7 +312,8 @@ return {
         "#D1FF33",
         "#FF6633",
       },
-      cancel_color_key = "<leader>a",
+      search_key = "<leader>i",
+      cancel_search_key = "<leader>I",
     },
   },
   {
@@ -415,6 +424,19 @@ return {
     },
     config = function()
       require("gitlineage").setup()
+    end,
+  },
+  {
+    "LintaoAmons/bookmarks.nvim",
+    -- backup your bookmark sqlite db when there are breaking changes (major version change)
+    dependencies = {
+      { "kkharji/sqlite.lua" },
+      { "nvim-telescope/telescope.nvim" }, -- currently has only telescopes supported, but PRs for other pickers are welcome
+      { "stevearc/dressing.nvim" }, -- optional: better UI
+    },
+    config = function()
+      local opts = {} -- check the "./lua/bookmarks/default-config.lua" file for all the options
+      require("bookmarks").setup(opts) -- you must call setup to init sqlite db
     end,
   },
 }
