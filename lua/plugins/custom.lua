@@ -124,7 +124,7 @@ return {
           "table", -- Lua 表
           "vector", -- C++ 向量
           "dictionary", -- 字典/映射
-          "object", -- JSON/JS 对象  
+          "object", -- JSON/JS 对象
         }
 
         local function is_structural(node_type)
@@ -261,7 +261,7 @@ return {
           live_grep = { entry_maker = custom_make_entry },
           grep_string = { entry_maker = custom_make_entry },
           lsp_incoming_calls = { entry_maker = custom_make_entry },
-          lsp_implementations = { entry_maker = custom_make_entry },  
+          lsp_implementations = { entry_maker = custom_make_entry },
           lsp_references = {
             include_declaration = true,
             include_current_line = true,
@@ -437,6 +437,17 @@ return {
     config = function()
       local opts = {} -- check the "./lua/bookmarks/default-config.lua" file for all the options
       require("bookmarks").setup(opts) -- you must call setup to init sqlite db
+    end,
+  },
+  {
+    "uga-rosa/translate.nvim",
+    config = function()
+      require("translate").setup({
+        default = {
+          command = "google",
+          output = "floating", -- 默认输出到浮窗
+        },
+      })
     end,
   },
 }
