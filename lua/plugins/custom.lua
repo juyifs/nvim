@@ -435,7 +435,13 @@ return {
       { "stevearc/dressing.nvim" }, -- optional: better UI
     },
     config = function()
-      local opts = {} -- check the "./lua/bookmarks/default-config.lua" file for all the options
+      local opts = {
+        picker = {
+          entry_display = function(bookmark, bookmarks)
+            return string.format("%s", bookmark.name)
+          end,
+        },
+      } -- check the "./lua/bookmarks/default-config.lua" file for all the options
       require("bookmarks").setup(opts) -- you must call setup to init sqlite db
     end,
   },
