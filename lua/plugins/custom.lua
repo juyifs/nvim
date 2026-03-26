@@ -59,7 +59,7 @@ return {
       local entry_display = require("telescope.pickers.entry_display")
 
       -- 辅助函数：获取 Treesitter 层级上下文
-      local function get_line_context(bufnr, lnum)
+      local function get_line_context_by_treesitter(bufnr, lnum)
         if not vim.api.nvim_buf_is_loaded(bufnr) then
           vim.fn.bufload(bufnr)
         end
@@ -167,7 +167,46 @@ return {
           current = current:parent()
         end
 
-        return #breadcrumbs > 0 and (" 󰆧 " .. table.concat(breadcrumbs, " > ")) or ""
+        return #breadcrumbs > 0 and ("  " .. table.concat(breadcrumbs, " > ")) or ""
+      end
+
+      -- 辅助函数：优先获取 LSP 层级上下文，否则获取treesitter上下文
+      local function get_line_context(bufnr, lnum)
+        -- 1. 检查 navic 是否可用以及是否在当前 buffer 处于激活状态
+        local has_navic, navic = pcall(require, "nvim-navic")
+        if not has_navic or not navic.is_available(bufnr) then
+          return get_line_context_by_treesitter(bufnr, lnum)
+        end
+
+        -- 2. 直接获取 navic 的数据（它已经根据当前行号处理好了上下文）
+        local data = navic.get_data(bufnr)
+        if not data or #data == 0 then
+          return get_line_context_by_treesitter(bufnr, lnum)
+        end
+
+        -- 3. 提取最后两个节点（模拟你原函数中 count < 2 的逻辑）
+        local breadcrumbs = {}
+        local startIndex = math.max(1, #data - 1) -- 只取最后两个，例如: Class > Method
+
+        for i = startIndex, #data do
+          local item = data[i]
+          local name = item.name
+
+          -- 清洗逻辑：处理 C++ :: 或 Rust 的路径，只留末尾名称
+          local clean_name = name:match("([^:]+)$") or name
+
+          -- 限制长度，防止 UI 撑破
+          if #clean_name < 50 then
+            table.insert(breadcrumbs, clean_name)
+          end
+        end
+
+        -- 4. 拼装输出
+        if #breadcrumbs > 0 then
+          return " 󰌗 " .. table.concat(breadcrumbs, " > ")
+        end
+
+        return ""
       end
 
       -- 自定义 Entry Maker：保留原始功能并注入 Context
@@ -435,13 +474,7 @@ return {
       { "stevearc/dressing.nvim" }, -- optional: better UI
     },
     config = function()
-      local opts = {
-        picker = {
-          entry_display = function(bookmark, bookmarks)
-            return string.format("%s", bookmark.name)
-          end,
-        },
-      } -- check the "./lua/bookmarks/default-config.lua" file for all the options
+      local opts = {} -- check the "./lua/bookmarks/default-config.lua" file for all the options
       require("bookmarks").setup(opts) -- you must call setup to init sqlite db
     end,
   },
