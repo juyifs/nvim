@@ -183,7 +183,7 @@ return {
         if not data or #data == 0 then
           return get_line_context_by_treesitter(bufnr, lnum)
         end
-
+        navic.update_context(bufnr, {lnum, 0})
         -- 3. 提取最后两个节点（模拟你原函数中 count < 2 的逻辑）
         local breadcrumbs = {}
         local startIndex = math.max(1, #data - 1) -- 只取最后两个，例如: Class > Method
